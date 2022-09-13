@@ -3,12 +3,16 @@ const cors = require('cors')
 const userRouter = require('./Router/user')
 const artcatesRouter = require('./Router/artcates')
 const userInfoRouter = require('./Router/userinfo')
+const articelRouter = require('./Router/article')
 const custome_mw = require('./custom/middleware')
 const express_jwt = require('express-jwt')
 const config = require('./custom/config')
 
 
 const app = express()
+
+//托管上传文章封面文件
+app.use('/upload', express.static(config.upload_path))
     //注册跨哉中间件[CORS VERSION 2.8.5]
 app.use(cors())
     //用于解析application/x-www-form-urlencoded
@@ -33,7 +37,8 @@ app.use('/my/', userInfoRouter)
 //文章分类路由
 app.use('/my/article', artcatesRouter)
 
-
+//文章管理路由
+app.use('/my/article', articelRouter)
 
 
 //全局错误中间件
